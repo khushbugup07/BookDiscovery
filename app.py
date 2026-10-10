@@ -5,25 +5,18 @@ import requests
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE_DIR = os.path.join(BASE_DIR, "database")
+os.makedirs(DATABASE_DIR, exist_ok=True)
+DATABASE_PATH = os.path.join(DATABASE_DIR, "bookdiscovery.db")
+
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "development-key-change-me")
 
 def init_db():
 
-    import os
-
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    database_folder = os.path.join(base_dir, "database")
-
-    os.makedirs(database_folder, exist_ok=True)
-
-    database_path = os.path.join(
-        database_folder,
-        "bookdiscovery.db"
-    )
-
-    connection = sqlite3.connect(database_path)
+    connection = sqlite3.connect(DATABASE_PATH)
 
     cursor = connection.cursor()
 
@@ -844,7 +837,7 @@ def register():
 
         try:
 
-            connection = sqlite3.connect("database/bookdiscovery.db")
+            connection = sqlite3.connect(DATABASE_PATH)
 
             cursor = connection.cursor()
 
@@ -880,7 +873,7 @@ def login():
         email = request.form.get("email", "").strip()
         password = request.form.get("password", "")
 
-        connection = sqlite3.connect("database/bookdiscovery.db")
+        connection = sqlite3.connect(DATABASE_PATH)
         cursor = connection.cursor()
 
         cursor.execute(
