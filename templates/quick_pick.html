@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quick Pick - BookDiscovery</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+    <span class="logo-icon">📖</span>
+    <span>BookDiscovery</span>
+</div>
+
+        <div class="nav-links">
+
+    <a href="/">Home</a>
+    <a href="/quick-pick">Quick Pick</a>
+    <a href="/#categories">Categories</a>
+    <a href="/#about">About</a>
+    <a href="/favorites">My Favorites</a>
+    <a href="/history">History</a>
+
+    {% if session.get("user_id") %}
+
+        <span class="welcome-user">
+            Hi, {{ session.get("user_name") }}
+        </span>
+
+        <a href="/logout">Logout</a>
+
+    {% else %}
+
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+
+    {% endif %}
+
+</div>
+
+    </nav>
+
+
+    <!-- Quick Pick -->
+    <main class="quick-pick-page">
+
+        <div class="quick-pick-header">
+
+            <h1>Quick Pick</h1>
+
+            <p>
+                Answer a few simple questions and find books
+                that match your interests.
+            </p>
+
+        </div>
+
+
+        <form action="/quick-pick" method="GET" class="quick-pick-form">
+
+            <!-- Question 1 -->
+
+            <div class="question">
+
+                <h2>1. What do you want to improve?</h2>
+
+                <label>
+                    <input type="radio" name="goal"
+                           value="Study & Learning" required>
+                    Study & Learning
+                </label>
+
+                <label>
+                    <input type="radio" name="goal"
+                           value="Habits & Discipline">
+                    Habits & Discipline
+                </label>
+
+                <label>
+                    <input type="radio" name="goal"
+                           value="Personal Growth">
+                    Personal Growth
+                </label>
+
+                <label>
+                    <input type="radio" name="goal"
+                           value="Communication">
+                    Communication
+                </label>
+
+                <label>
+                    <input type="radio" name="goal"
+                           value="Finance">
+                    Finance
+                </label>
+
+                <label>
+                    <input type="radio" name="goal"
+                           value="Career & Success">
+                    Career & Success
+                </label>
+
+            </div>
+
+
+            <!-- Question 2 -->
+
+            <div class="question">
+
+                <h2>2. What kind of reading do you prefer?</h2>
+
+                <label>
+                    <input type="radio" name="style"
+                           value="Practical" required>
+                    Practical & Actionable
+                </label>
+
+                <label>
+                    <input type="radio" name="style"
+                           value="Inspirational">
+                    Inspirational
+                </label>
+
+                <label>
+                    <input type="radio" name="style"
+                           value="Psychological">
+                    Psychological
+                </label>
+
+            </div>
+
+
+            <!-- Question 3 -->
+
+            <div class="question">
+
+                <h2>3. What reading experience do you want?</h2>
+
+                <label>
+                    <input type="radio" name="experience"
+                           value="Beginner" required>
+                    Beginner-Friendly
+                </label>
+
+                <label>
+                    <input type="radio" name="experience"
+                           value="Detailed">
+                    Detailed & In-Depth
+                </label>
+
+                <label>
+                    <input type="radio" name="experience"
+                           value="Quick">
+                    Quick & Easy
+                </label>
+
+            </div>
+
+
+            <button type="submit" class="quick-pick-button">
+                Find My Books
+            </button>
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>

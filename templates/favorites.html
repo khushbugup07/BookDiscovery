@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Favorites - BookDiscovery</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+    <span class="logo-icon">📖</span>
+    <span>BookDiscovery</span>
+</div>
+
+        <div class="nav-links">
+
+            <a href="/">Home</a>
+            <a href="/quick-pick">Quick Pick</a>
+            <a href="/#categories">Categories</a>
+            <a href="/#about">About</a>
+            <a href="/favorites">My Favorites</a>
+            <a href="/history">History</a>
+
+            <span class="welcome-user">
+                Hi, {{ session.get("user_name") }}
+            </span>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </nav>
+
+    <main class="results-page">
+
+        <section class="results-header">
+
+            <h1>My Favorite Books</h1>
+
+            <p>
+                Books you have saved for later.
+            </p>
+
+        </section>
+
+        {% if books %}
+
+            <div class="books-container">
+
+                {% for book in books %}
+
+                    <div class="book-card">
+
+                        <div class="book-cover">
+
+                            {% if book.volumeInfo.imageLinks %}
+
+                                <img
+                                    src="{{ book.volumeInfo.imageLinks.thumbnail }}"
+                                    alt="{{ book.volumeInfo.title }}"
+                                >
+
+                            {% elif book.volumeInfo.isbn %}
+
+                                <img
+                                    src="https://covers.openlibrary.org/b/isbn/{{ book.volumeInfo.isbn }}-L.jpg"
+                                    alt="{{ book.volumeInfo.title }}"
+                                >
+
+                            {% else %}
+
+                                <div class="no-cover">
+                                    <span>📖</span>
+                                    <p>Book Cover</p>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                        <div class="book-info">
+
+                            <h2>{{ book.volumeInfo.title }}</h2>
+
+                            {% if book.volumeInfo.authors %}
+
+                                <p class="author">
+                                    By {{ book.volumeInfo.authors | join(', ') }}
+                                </p>
+
+                            {% endif %}
+
+                            {% if book.volumeInfo.description %}
+
+                                <p class="description">
+                                    {{ book.volumeInfo.description[:180] }}...
+                                </p>
+
+                            {% endif %}
+
+                            <a
+                                class="details-button"
+                                href="/book/{{ book.id }}"
+                            >
+                                View Details
+                            </a>
+
+                            <a
+                                class="remove-favorite-button"
+                                href="/remove-favorite/{{ book.id }}"
+                            >
+                                Remove from Favorites
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-favorites">
+
+                <h2>No Favorite Books Yet</h2>
+
+                <p>
+                    Start discovering books and save your favorites here.
+                </p>
+
+                <a href="/" class="quick-pick-home-button">
+                    Discover Books
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+</body>
+
+</html>

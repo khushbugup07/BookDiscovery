@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BookDiscovery</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+<nav class="navbar">
+    <div class="logo">
+    <span class="logo-icon">📖</span>
+    <span>BookDiscovery</span>
+</div>
+
+<div class="nav-links">
+
+    <a href="/">Home</a>
+    <a href="/quick-pick">Quick Pick</a>
+    <a href="/#categories">Categories</a>
+    <a href="/#about">About</a>
+    <a href="/favorites">My Favorites</a>
+    <a href="/history">History</a>
+
+    {% if session.get("user_id") %}
+
+        <span class="welcome-user">
+            Hi, {{ session.get("user_name") }}
+        </span>
+
+        <a href="/logout">Logout</a>
+
+    {% else %}
+
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+
+    {% endif %}
+
+</div>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <h1>Find Your Next Great Book</h1>
+
+                <p>
+                    Discover books that match your interests,
+                    mood and curiosity.
+                </p>
+
+                <form class="search-box" action="/search" method="GET">
+
+    <input
+    type="text"
+    name="q"
+    placeholder="Search for a book..."
+>
+
+    <button type="submit">Search</button>
+
+</form>
+<a href="/quick-pick" class="quick-pick-home-button">
+    Try Quick Pick
+</a>
+<div class="hero-highlights">
+    <span>📚 Explore Books</span>
+    <span>🎯 Discover by Goal</span>
+    <span>⚡ Quick Recommendations</span>
+</div>
+            </div>
+
+        </section>
+
+
+        <!-- Categories Section -->
+        <section class="categories" id="categories">
+
+            <h2>Explore by Category</h2>
+
+            <div class="category-container">
+
+                <a href="/category/Self-Help" class="category-card">
+    <div class="category-icon">🌱</div>
+    <h3>Self-Help</h3>
+    <p>Books for personal growth and better habits.</p>
+</a>
+
+<a href="/category/Psychology" class="category-card">
+    <div class="category-icon">🧠</div>
+    <h3>Psychology</h3>
+    <p>Explore the human mind and behaviour.</p>
+</a>
+
+<a href="/category/Business" class="category-card">
+    <div class="category-icon">💼</div>
+    <h3>Business</h3> 
+    <p>Learn about business, leadership and success.</p>
+</a>
+
+<a href="/category/Biography" class="category-card">
+    <div class="category-icon">👤</div>
+    <h3>Biography</h3>
+    <p>Discover inspiring real-life stories.</p>
+</a>
+
+<a href="/category/Finance" class="category-card">
+    <div class="category-icon">💰</div>
+    <h3>Finance</h3>
+    <p>Learn about money, investing and financial thinking.</p>
+</a>
+
+<a href="/category/Education%20%26%20Learning" class="category-card">
+    <div class="category-icon">🎓</div>
+    <h3>Education & Learning</h3>
+    <p>Books for studying, learning and improving knowledge.</p>
+</a>
+
+<a href="/category/Communication" class="category-card">
+    <div class="category-icon">💬</div>
+    <h3>Communication</h3>
+    <p>Improve communication and social skills.</p>
+</a>
+
+<a href="/category/Career%20%26%20Success" class="category-card">
+    <div class="category-icon">🚀</div>
+    <h3>Career & Success</h3>
+    <p>Books for career development and achievement.</p>
+</a>
+
+<a href="/category/Philosophy%20%26%20Mindfulness" class="category-card">
+    <div class="category-icon">🧘</div>
+    <h3>Philosophy & Mindfulness</h3>
+    <p>Explore ideas, meaning, awareness and mindfulness.</p>
+</a>
+
+<a href="/category/Science" class="category-card">
+    <div class="category-icon">🔬</div>
+    <h3>Science</h3>
+    <p>Discover books about science and the world around us.</p>
+</a>
+
+<a href="/category/Creativity%20%26%20Writing" class="category-card">
+    <div class="category-icon">✍️</div>
+    <h3>Creativity & Writing</h3>
+    <p>Develop creativity, writing and imagination.</p>
+</a>
+            </div>
+
+        </section>
+        <section class="goal-discovery">
+
+    <h2>What Do You Want to Improve?</h2>
+
+    <p>
+        Choose a goal and discover books that may help you explore it.
+    </p>
+
+    <div class="goal-container">
+
+        <a href="/goal/Study%20%26%20Learning" class="goal-card">
+            <span>📚</span>
+            <h3>Study & Learning</h3>
+        </a>
+
+        <a href="/goal/Habits%20%26%20Discipline" class="goal-card">
+            <span>🎯</span>
+            <h3>Habits & Discipline</h3>
+        </a>
+
+        <a href="/goal/Personal%20Growth" class="goal-card">
+            <span>🌱</span>
+            <h3>Personal Growth</h3>
+        </a>
+
+        <a href="/goal/Communication" class="goal-card">
+            <span>💬</span>
+            <h3>Communication</h3>
+        </a>
+
+        <a href="/goal/Finance" class="goal-card">
+            <span>💰</span>
+            <h3>Finance</h3>
+        </a>
+
+        <a href="/goal/Career%20%26%20Success" class="goal-card">
+            <span>💼</span>
+            <h3>Career & Success</h3>
+        </a>
+
+    </div>
+
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works">
+
+    <h2>How BookDiscovery Works</h2>
+
+    <p class="how-it-works-intro">
+        Discover books in a simple way based on what you want to read and explore.
+    </p>
+
+    <div class="steps-container">
+
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Search or Explore</h3>
+            <p>
+                Search for a book, browse categories, or explore books based on your goals.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Discover Books</h3>
+            <p>
+                View book information such as author, description, rating, publisher and more.
+            </p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Save Your Favorites</h3>
+            <p>
+                Logged-in users can save interesting books and easily access them later.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+<!-- About Section -->
+<section class="about-section" id="about">
+
+    <div class="about-container">
+
+        <h2>About BookDiscovery</h2>
+
+        <p class="about-intro">
+            BookDiscovery is a book discovery website designed to help readers
+            find books that match their interests, goals, and reading preferences.
+            Instead of searching through countless books, users can explore
+            relevant books through different discovery features.
+        </p>
+
+        <div class="about-features">
+
+            <div class="about-card">
+                <h3>🔎 Smart Book Search</h3>
+                <p>
+                    Search for books using a title, author, or keyword and
+                    quickly explore the available results.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h3>🎯 Goal-Based Discovery</h3>
+                <p>
+                    Choose a personal goal such as improving study habits,
+                    communication, finance, or personal growth and discover
+                    books related to it.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h3>⚡ Quick Pick</h3>
+                <p>
+                    Select your goal, reading style, and reading experience
+                    to receive a personalized selection of books.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h3>📚 Explore Categories</h3>
+                <p>
+                    Browse books across categories such as psychology,
+                    business, finance, education, biography, science,
+                    creativity, and more.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h3>❤️ Save Favorites</h3>
+                <p>
+                    Registered users can save interesting books to their
+                    favorites and access them whenever they want.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h3>📖 Detailed Information</h3>
+                <p>
+                    View important book information including the cover,
+                    author, description, publisher, pages, rating, and
+                    publication details.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+    </main>
+    
+
+<footer class="site-footer">
+
+    <div class="footer-content">
+
+        <div>
+            <h3>BookDiscovery</h3>
+            <p>
+                Discover books based on your interests, goals and reading preferences.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/quick-pick">Quick Pick</a>
+            <a href="/#categories">Categories</a>
+            <a href="/#about">About</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 BookDiscovery. All rights reserved.</p>
+    </div>
+
+</footer>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

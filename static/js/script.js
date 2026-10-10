@@ -1,0 +1,1 @@
+console.log("BookDiscovery JavaScript is connected!");

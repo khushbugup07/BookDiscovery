@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ book.volumeInfo.title }} - BookDiscovery</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+    <span class="logo-icon">📖</span>
+    <span>BookDiscovery</span>
+</div>
+
+        <div class="nav-links">
+
+            <a href="/">Home</a>
+            <a href="/quick-pick">Quick Pick</a>
+            <a href="/#categories">Categories</a>
+            <a href="/#about">About</a>
+            <a href="/favorites">My Favorites</a>
+            <a href="/history">History</a>
+
+            {% if session.get("user_id") %}
+
+                <span class="welcome-user">
+                    Hi, {{ session.get("user_name") }}
+                </span>
+
+                <a href="/logout">Logout</a>
+
+            {% else %}
+
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+    <!-- Book Details -->
+
+    <main class="book-details-page">
+
+        <a href="javascript:history.back()" class="back-link">
+            ← Back to Results
+        </a>
+
+
+        <section class="book-details-card">
+
+
+            <!-- Book Cover -->
+
+            <div class="details-cover">
+
+                {% if book.volumeInfo.imageLinks %}
+
+                    <img
+                        src="{{ book.volumeInfo.imageLinks.thumbnail }}"
+                        alt="{{ book.volumeInfo.title }}"
+                    >
+
+                {% elif book.volumeInfo.isbn %}
+
+                    <img
+                        src="https://covers.openlibrary.org/b/isbn/{{ book.volumeInfo.isbn }}-L.jpg"
+                        alt="{{ book.volumeInfo.title }}"
+                    >
+
+                {% else %}
+
+                    <div class="no-cover">
+                        <span>📖</span>
+                        <p>Book Cover</p>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Book Information -->
+
+            <div class="details-content">
+
+                <h1>
+                    {{ book.volumeInfo.title }}
+                </h1>
+
+
+                {% if book.volumeInfo.authors %}
+
+                    <p class="details-author">
+                        By {{ book.volumeInfo.authors | join(', ') }}
+                    </p>
+
+                {% endif %}
+
+
+                <!-- Description -->
+
+                {% if book.volumeInfo.description %}
+
+                    <div class="details-description">
+
+                        <h2>
+                            About the Book
+                        </h2>
+
+                        <p>
+                            {{ book.volumeInfo.description }}
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Book Information -->
+
+                <div class="book-meta">
+
+
+                    {% if book.volumeInfo.publisher %}
+
+                        <div>
+
+                            <strong>
+                                Publisher
+                            </strong>
+
+                            <span>
+                                {{ book.volumeInfo.publisher }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if book.volumeInfo.pageCount %}
+
+                        <div>
+
+                            <strong>
+                                Pages
+                            </strong>
+
+                            <span>
+                                {{ book.volumeInfo.pageCount }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if book.volumeInfo.rating %}
+
+                        <div>
+
+                            <strong>
+                                Rating
+                            </strong>
+
+                            <span>
+                                ⭐ {{ book.volumeInfo.rating }}/5
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if book.volumeInfo.publishedDate %}
+
+                        <div>
+
+                            <strong>
+                                Published
+                            </strong>
+
+                            <span>
+                                {{ book.volumeInfo.publishedDate }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if book.volumeInfo.isbn %}
+
+                        <div>
+
+                            <strong>
+                                ISBN
+                            </strong>
+
+                            <span>
+                                {{ book.volumeInfo.isbn }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <!-- Categories -->
+
+                {% if book.volumeInfo.categories %}
+
+                    <div class="categories-list">
+
+                        <strong>
+                            Categories
+                        </strong>
+
+                        <div class="category-tags">
+
+                            {% for category in book.volumeInfo.categories %}
+
+                                <span>
+                                    {{ category }}
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+<!-- Book Access -->
+
+<div class="book-access">
+
+    {% if book.accessInfo and book.accessInfo.webReaderLink %}
+
+        <a
+            href="{{ book.accessInfo.webReaderLink }}"
+            target="_blank"
+            class="book-access-button"
+        >
+            📖 Read / Access Book
+        </a>
+
+    {% elif book.volumeInfo.previewLink %}
+
+        <a
+            href="{{ book.volumeInfo.previewLink }}"
+            target="_blank"
+            class="book-access-button"
+        >
+            🔎 Preview Book
+        </a>
+
+    {% elif book.volumeInfo.infoLink %}
+
+        <a
+            href="{{ book.volumeInfo.infoLink }}"
+            target="_blank"
+            class="book-access-button"
+        >
+            📚 View on Google Books
+        </a>
+
+    {% else %}
+
+        <p class="no-access">
+            Online access is not available for this book.
+        </p>
+
+    {% endif %}
+
+</div>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
