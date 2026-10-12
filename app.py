@@ -903,7 +903,7 @@ def favorite(book_id):
 
     user_id = session.get("user_id")
 
-    connection = sqlite3.connect("database/bookdiscovery.db")
+    connection = sqlite3.connect(DATABASE_PATH)
 
     cursor = connection.cursor()
 
@@ -941,7 +941,7 @@ def remove_favorite(book_id):
 
     user_id = session.get("user_id")
 
-    connection = sqlite3.connect("database/bookdiscovery.db")
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
     cursor.execute(
@@ -965,7 +965,7 @@ def favorites():
 
     user_id = session.get("user_id")
 
-    connection = sqlite3.connect("database/bookdiscovery.db")
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
     cursor.execute(
@@ -1047,7 +1047,7 @@ def search():
 
     if session.get("user_id"):
 
-        connection = sqlite3.connect("database/bookdiscovery.db")
+        connection = sqlite3.connect(DATABASE_PATH)
         cursor = connection.cursor()
 
         cursor.execute(
@@ -1085,7 +1085,7 @@ def category(category_name):
 
     if session.get("user_id"):
 
-        connection = sqlite3.connect("database/bookdiscovery.db")
+        connection = sqlite3.connect(DATABASE_PATH)
         cursor = connection.cursor()
 
         cursor.execute(
@@ -1122,7 +1122,7 @@ def goal(goal_name):
 
     if session.get("user_id"):
 
-        connection = sqlite3.connect("database/bookdiscovery.db")
+        connection = sqlite3.connect(DATABASE_PATH)
         cursor = connection.cursor()
 
         cursor.execute(
@@ -1199,7 +1199,7 @@ def quick_pick():
 
     if session.get("user_id"):
 
-        connection = sqlite3.connect("database/bookdiscovery.db")
+        connection = sqlite3.connect(DATABASE_PATH)
         cursor = connection.cursor()
 
         cursor.execute(
@@ -1235,11 +1235,7 @@ def book_details(book_id):
     # Record book in history for logged-in users
     if session.get("user_id"):
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        database_path = os.path.join(
-            base_dir,
-            "database",
-            "bookdiscovery.db"
-        )
+        connection = sqlite3.connect(DATABASE_PATH)
 
         connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
@@ -1269,11 +1265,7 @@ def history():
         return redirect("/login")
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    database_path = os.path.join(
-        base_dir,
-        "database",
-        "bookdiscovery.db"
-    )
+    connection = sqlite3.connect(DATABASE_PATH)
 
     connection = sqlite3.connect(database_path)
     cursor = connection.cursor()
@@ -1311,6 +1303,8 @@ def history():
 
 
 
+# Initialize database when the application starts
+init_db()
+
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True)
