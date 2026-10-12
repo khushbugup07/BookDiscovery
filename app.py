@@ -1236,8 +1236,6 @@ def book_details(book_id):
     if session.get("user_id"):
         base_dir = os.path.dirname(os.path.abspath(__file__))
         connection = sqlite3.connect(DATABASE_PATH)
-
-        connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
         # Remove previous entry so the latest visit appears first
@@ -1267,7 +1265,7 @@ def history():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     connection = sqlite3.connect(DATABASE_PATH)
 
-    connection = sqlite3.connect(database_path)
+    
     cursor = connection.cursor()
 
     cursor.execute("""
